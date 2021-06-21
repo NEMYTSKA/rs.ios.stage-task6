@@ -37,17 +37,40 @@ struct Card: CardBaseCompatible {
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return false
+        return  (lhs.suit == rhs.suit) && (lhs.value == rhs.value) &&
+                (lhs.isTrump == rhs.isTrump) && (lhs.hashValue == rhs.hashValue)
     }
 }
 
 extension Card {
 
     func checkIfCanBeat(card: Card) -> Bool {
-        return false
+        
+        return checkValue(card: card)
     }
+    
 
     func checkValue(card: Card) -> Bool {
-        return false
+        if (isTrump == false) && (card.isTrump == true) {
+            return false
+        }
+        if (isTrump == true) && (card.isTrump == false) {
+            return true
+        }
+        if (isTrump == true) && (card.isTrump == true) {
+            if value.rawValue > card.value.rawValue {
+                return true
+            } else {
+                return false
+            }
+        }
+        if (isTrump == false) && (card.isTrump == false) {
+            if value.rawValue > card.value.rawValue {
+                return true
+            } else {
+                return false
+            }
+        }
+        return true
     }
 }
